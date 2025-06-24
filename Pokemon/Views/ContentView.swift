@@ -8,27 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var pokemons: [Pokemon] = []
+    @StateObject var viewModel = ContentViewModel()
     
     var body: some View {
         Header()
         
         NavigationStack {
-            List(pokemons) { pokemon in
+            List(viewModel.pokemons) { pokemon in
                 ZStack {
                     NavigationLink(String()) {
-                        DetailView(pokemon: pokemon, pokemons: $pokemons)
+                        DetailView(pokemon: pokemon, pokemons: $viewModel.pokemons)
                     }
                     .opacity(0)
-                    PokemonCard(pokemon: pokemon)
+//                    PokemonCard(viewModel.pokemon: pokemon)
                 }
                 .listRowSeparator(.hidden)
                 .swipeActions {
-                    Button("Excluir") {
-                        pokemons.removeAll {
-                            $0.id == pokemon.id
-                        }
-                    }
+//                    Button("Excluir") {
+//                        pokemons.removeAll {
+//                            $0.id == pokemon.id
+//                        }
+//                    }
                     
                     Button(role: .destructive, action: {
                         print("Remove Pokémon")
@@ -39,16 +39,8 @@ struct ContentView: View {
             }
             .listStyle(.plain)
             .onAppear() {
-                guard pokemons.isEmpty else { return }
                 Task {
-                    do {
-                        let pokemonsData = try await Network.shared.fetchPokemons()
-                        pokemons = pokemonsData.enumerated().map { (index, data) in
-                            Pokemon(data: data, cover: .init(indexImage: index + 1), typeColor: .init(apiType: "normal"))
-                        }
-                    } catch {
-                        print(error)
-                    }
+                    viewModel.fetchPokemons()
                 }
             }
         }
