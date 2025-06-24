@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct DetailView: View {
-    var pokemon: Pokemon
+    @Environment(\.dismiss) var dismiss
+    let pokemon: Pokemon
+    @Binding var pokemons: [Pokemon]
     @State var detail: DetailDTO?
     let gaugeMin = 0
     let gaugeMax = 255
@@ -85,6 +87,11 @@ struct DetailView: View {
             }
             
             VStack {
+                Button("Excluir") {
+                    pokemons.removeAll(where: { $0.id == pokemon.id })
+                    dismiss()
+                }
+                
                 Text("About")
                     .foregroundColor(backgroundColor)
                     .bold()
@@ -145,14 +152,14 @@ struct DetailView: View {
     }
 }
 
-#Preview {
-    DetailView(
-        pokemon: .init(data: .init(
-            name: "Bulbasaur",
-//            types: ["grass", "poison"]
-        ),
-                       cover: .init(indexImage: 1),
-                       typeColor: .init(apiType: "grass")),
-        detail: nil
-    )
-}
+//#Preview {
+//    DetailView(
+//        pokemon: .init(data: .init(
+//            name: "Bulbasaur",
+////            types: ["grass", "poison"]
+//        ),
+//                       cover: .init(indexImage: 1),
+//                       typeColor: .init(apiType: "grass")),
+//        detail: nil
+//    )
+//}

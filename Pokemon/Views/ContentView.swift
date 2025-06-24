@@ -17,12 +17,25 @@ struct ContentView: View {
             List(pokemons) { pokemon in
                 ZStack {
                     NavigationLink(String()) {
-                        DetailView(pokemon: pokemon)
+                        DetailView(pokemon: pokemon, pokemons: $pokemons)
                     }
                     .opacity(0)
                     PokemonCard(pokemon: pokemon)
                 }
                 .listRowSeparator(.hidden)
+                .swipeActions {
+                    Button("Excluir") {
+                        pokemons.removeAll {
+                            $0.id == pokemon.id
+                        }
+                    }
+                    
+                    Button(role: .destructive, action: {
+                        print("Remove Pokémon")
+                    }) {
+                        Label("Remove", systemImage: "trash")
+                    }
+                }
             }
             .listStyle(.plain)
             .onAppear() {
