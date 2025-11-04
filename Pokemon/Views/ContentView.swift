@@ -19,8 +19,8 @@ struct ContentView: View {
                     NavigationLink(String()) {
                         DetailView(pokemon: pokemon, pokemons: $viewModel.pokemons)
                     }
-                    .opacity(0)
-//                    PokemonCard(viewModel.pokemon: pokemon)
+                    .opacity(1)
+                    PokemonCard(pokemon: pokemon)
                 }
                 .listRowSeparator(.hidden)
                 .swipeActions {
@@ -40,7 +40,7 @@ struct ContentView: View {
             .listStyle(.plain)
             .onAppear() {
                 Task {
-                    viewModel.fetchPokemons()
+                    await viewModel.fetchPokemons()
                 }
             }
         }
