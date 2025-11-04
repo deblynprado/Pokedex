@@ -10,9 +10,16 @@ import SwiftUI
 struct Header: View {
     var body: some View {
        ZStack {
-            Text("PokeApi")
-               .font(.title)
-               
+           HStack {
+               Image("pokeball")
+                   .padding(.trailing, 20)
+                Text("Pokédex")
+                   .font(.largeTitle)
+                   .bold()
+               Spacer()
+           }
+           .foregroundColor(.white)
+           .padding()
         }
        .frame(maxWidth: .infinity)
        .background(Color.red)
