@@ -10,16 +10,29 @@ import SwiftUI
 struct Header: View {
     var body: some View {
        ZStack {
-           HStack {
-               Image("pokeball")
-                   .padding(.trailing, 20)
-                Text("Pokédex")
-                   .font(.largeTitle)
-                   .bold()
-               Spacer()
+           VStack {
+               HStack {
+                   Image("pokeball")
+                       .padding(.trailing, 20)
+                    Text("Pokédex")
+                       .font(.largeTitle)
+                       .bold()
+                   Spacer()
+               }
+               .foregroundColor(.white)
+               .padding()
+               
+               HStack {
+                   Image(systemName: "magnifyingglass")
+                   TextField("Search", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                       .textFieldStyle(RoundedBorderTextFieldStyle())
+//                       .frame(height: 30)
+//                       .background(Color.white)
+//                       .cornerRadius(10)
+               }
+               .padding()
            }
-           .foregroundColor(.white)
-           .padding()
+           
         }
        .frame(maxWidth: .infinity)
        .background(Color.red)
