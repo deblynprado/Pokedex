@@ -23,12 +23,16 @@ struct Header: View {
                .padding()
                
                HStack {
-                   Image(systemName: "magnifyingglass")
-                   TextField("Search", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-                       .textFieldStyle(RoundedBorderTextFieldStyle())
-//                       .frame(height: 30)
-//                       .background(Color.white)
-//                       .cornerRadius(10)
+                   HStack {
+                       Image(systemName: "magnifyingglass")
+                           .foregroundColor(.pokeApiDefault)
+                       TextField("Search", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                   }
+                   .padding()
+                   .frame(height: 30)
+                   .background(Color.white)
+                   .cornerRadius(10)
                }
                .padding()
            }
