@@ -152,14 +152,17 @@ struct DetailView: View {
     }
 }
 
-//#Preview {
-//    DetailView(
-//        pokemon: .init(data: .init(
-//            name: "Bulbasaur",
-////            types: ["grass", "poison"]
-//        ),
-//                       cover: .init(indexImage: 1),
-//                       typeColor: .init(apiType: "grass")),
-//        detail: nil
-//    )
-//}
+#Preview {
+    // Build a sample Pokemon for the preview
+    let sample = Pokemon(
+        data: PokemonDTO(name: "Pikachu"),
+        cover: PokemonCover(indexImage: 25),
+        typeColor: PokemonType(apiType: "electric")
+    )
+    
+    // Provide a constant binding for the list of pokemons
+    return DetailView(
+        pokemon: sample,
+        pokemons: .constant([sample])
+    )
+}

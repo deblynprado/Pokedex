@@ -9,39 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
+    let adaptiveColumns = [
+        GridItem(.adaptive(minimum: 120))
+    ]
     
     var body: some View {
         Header()
         
         NavigationStack {
-            List(viewModel.pokemons) { pokemon in
-                ZStack {
-                    NavigationLink(String()) {
-                        DetailView(pokemon: pokemon, pokemons: $viewModel.pokemons)
-                    }
-                    .opacity(1)
-                    PokemonCard(pokemon: pokemon)
-                }
-                .listRowSeparator(.hidden)
-                .swipeActions {
-//                    Button("Excluir") {
-//                        pokemons.removeAll {
-//                            $0.id == pokemon.id
-//                        }
-//                    }
-                    
-                    Button(role: .destructive, action: {
-                        print("Remove Pokémon")
-                    }) {
-                        Label("Remove", systemImage: "trash")
+            ScrollView {
+                LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                    ForEach(viewModel.pokemons) { pokemon in
+                        NavigationLink {
+                            DetailView(pokemon: pokemon, pokemons: $viewModel.pokemons)
+                        } label: {
+                            PokemonCard(pokemon: pokemon)
+                        }
+                        .opacity(1)
                     }
                 }
             }
-            .listStyle(.plain)
-            .onAppear() {
-                Task {
-                    await viewModel.fetchPokemons()
-                }
+        }
+        .onAppear() {
+            Task {
+                await viewModel.fetchPokemons()
             }
         }
     }
